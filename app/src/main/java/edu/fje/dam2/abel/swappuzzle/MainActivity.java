@@ -1,8 +1,6 @@
 package edu.fje.dam2.abel.swappuzzle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,8 +15,9 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Menu {
 
     private static final int PERMIS_CAMARA = 200;
     private static final int PERMIS_CAPTURA_IMATGE = 300;
@@ -67,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 Adapter im = imatges.getAdapter();
                 imatges.setAdapter((ListAdapter) im);
 
-                Utilitat.comprovaSiComplet(chunkedImages, chunkedImagesOr);
+               if(Utilitat.comprovaSiComplet(chunkedImages, chunkedImagesOr)){
+                   enviarMissatge();
+               }
             }
 
         });
@@ -90,11 +91,21 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap originalBm = (Bitmap) extras.get("data");
                 chunkedImages = Utilitat.splitImage(originalBm, 9);
                 chunkedImagesOr = (ArrayList<Bitmap>) chunkedImages.clone();
-                // Collections.shuffle(chunkedImages);
+                //Collections.shuffle(chunkedImages);
                 ImageAdapter ia = new ImageAdapter(getApplicationContext(), chunkedImages);
                 imatges.setAdapter(ia);
 
             }
         }
     }
+
+    public void enviarMissatge() {
+        Intent intent = new Intent(this, FinalScreen.class);
+      /*  String missatge = crono.getText().toString();
+        intent.putExtra("playtime", missatge);
+        intent.putExtra("username", userName);*/
+        startActivity(intent);
+    }
+
+
 }

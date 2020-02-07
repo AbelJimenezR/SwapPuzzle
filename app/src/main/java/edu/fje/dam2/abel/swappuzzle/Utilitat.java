@@ -1,5 +1,6 @@
 package edu.fje.dam2.abel.swappuzzle;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -45,7 +46,7 @@ public class Utilitat extends AppCompatActivity {
     }
 
 
-    public static void comprovaSiComplet(ArrayList<Bitmap> img1, ArrayList<Bitmap> img2) {
+    public static boolean comprovaSiComplet(ArrayList<Bitmap> img1, ArrayList<Bitmap> img2) {
         int y = 0;
 
         for (int x = 0; x < img1.size(); x++) {
@@ -55,8 +56,12 @@ public class Utilitat extends AppCompatActivity {
         }
 
         if (y == 9) {
-            Log.i("ok", "FET");
-
+            return true;
+        }else{
+            return false;
         }
+
     }
+
+
 }
