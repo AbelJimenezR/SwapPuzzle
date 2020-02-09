@@ -1,8 +1,12 @@
 package edu.fje.dam2.abel.swappuzzle;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.InputType;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -62,6 +66,9 @@ public class Utilitat extends AppCompatActivity {
         }
 
     }
+
+
+
 
 
 }

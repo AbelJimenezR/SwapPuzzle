@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "683883504160",
+    "firebase_url": "https://damm08uf2-android-materi-e019a.firebaseio.com",
+    "project_id": "damm08uf2-android-materi-e019a",
+    "storage_bucket": "damm08uf2-android-materi-e019a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683883504160:android:538c925c39e7cbdbffd245",
+        "android_client_info": {
+          "package_name": "dam2.fje.edu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683883504160-4tc482etg4b0ln592m1vj5lod6iarrqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVGCv1gGiD0k71ObaikrpYdRMOg7r8NgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683883504160-4tc482etg4b0ln592m1vj5lod6iarrqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683883504160:android:58123de18ff3569effd245",
+        "android_client_info": {
+          "package_name": "edu.fje.dam2.abel.swappuzzle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683883504160-4tc482etg4b0ln592m1vj5lod6iarrqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVGCv1gGiD0k71ObaikrpYdRMOg7r8NgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683883504160-4tc482etg4b0ln592m1vj5lod6iarrqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

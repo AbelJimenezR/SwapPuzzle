@@ -17,13 +17,18 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".FinalScreen"/>
+        <activity android:name=".PantallaPuzzle"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".MainActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".AudioIntentService"
+             />
     </application>
 
 </manifest>

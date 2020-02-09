@@ -1,86 +1,65 @@
 package edu.fje.dam2.abel.swappuzzle;
 
-import androidx.core.app.ActivityCompat;
-import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ListAdapter;
+import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class MainActivity extends Menu {
 
-    private static final int PERMIS_CAMARA = 200;
     private static final int PERMIS_CAPTURA_IMATGE = 300;
-    private GridView imatges;
-    private Button boto;
-    private ArrayList<Bitmap> chunkedImages = new ArrayList<Bitmap>(9);
-    private ArrayList<Bitmap> chunkedImagesOr = new ArrayList<Bitmap>(9);
+    private static String userName;
+    private Button botoInici;
+    private Button botoSortir;
+    private Intent intent;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        boto = (Button) findViewById(R.id.botoFoto);
-        imatges = (GridView) findViewById(R.id.gridView);
+        intent= new Intent(this, AudioIntentService.class);
+        intent.putExtra("operacio", "inici");
+        startService(intent);
 
-        boto.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.main_activity);
 
+        botoInici = findViewById(R.id.botoInici);
+        botoSortir = findViewById(R.id.botoSortir);
+
+
+        botoInici.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMIS_CAMARA);
-                    return;
-                }
-                fesFoto(view);
+                askUser();
+
+            }
+        });
+        botoSortir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
+
             }
         });
 
-        imatges.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Integer posBuida = 0;
-
-                for (int x = 0; x < chunkedImages.size(); x++) {
-                    if (chunkedImages.get(x) == null) {
-                        posBuida = x;
-                    }
-                }
-
-                if (ComprovaPosicions.comprovaEsquerra(position, posBuida) || ComprovaPosicions.comprovaDreta(position, posBuida)
-                        || ComprovaPosicions.comprovaAmunt(position, posBuida) || ComprovaPosicions.comprovaAvall(position, posBuida)) {
-
-                    chunkedImages.set(posBuida, chunkedImages.get(position));
-                    chunkedImages.set(position, chunkedImagesOr.get(8));
-                }
-
-                Adapter im = imatges.getAdapter();
-                imatges.setAdapter((ListAdapter) im);
-
-               if(Utilitat.comprovaSiComplet(chunkedImages, chunkedImagesOr)){
-                   enviarMissatge();
-               }
-            }
-
-        });
 
     }
 
-    private void fesFoto(View view) {
+
+    public void fesFoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, PERMIS_CAPTURA_IMATGE);
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,23 +68,63 @@ public class MainActivity extends Menu {
             if (requestCode == PERMIS_CAPTURA_IMATGE && resultCode == RESULT_OK) {
                 Bundle extras = data.getExtras();
                 Bitmap originalBm = (Bitmap) extras.get("data");
-                chunkedImages = Utilitat.splitImage(originalBm, 9);
-                chunkedImagesOr = (ArrayList<Bitmap>) chunkedImages.clone();
-                //Collections.shuffle(chunkedImages);
-                ImageAdapter ia = new ImageAdapter(getApplicationContext(), chunkedImages);
-                imatges.setAdapter(ia);
+                Intent intent = new Intent(this, PantallaPuzzle.class);
+                intent.putExtra("imatge", originalBm);
+                intent.putExtra("nomUsuari", userName);
 
+                startActivity(intent);
             }
         }
     }
 
-    public void enviarMissatge() {
-        Intent intent = new Intent(this, FinalScreen.class);
-      /*  String missatge = crono.getText().toString();
-        intent.putExtra("playtime", missatge);
-        intent.putExtra("username", userName);*/
-        startActivity(intent);
+    public void askUser() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Introdueix el teu nom");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                userName = input.getText().toString();
+                askUser2();
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
+    public void askUser2() {
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Tria la font");
+        builder.setPositiveButton("FIREBASE", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setNegativeButton("CAMERA", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                fesFoto();
+            }
+        });
+
+        builder.show();
+    }
 }

@@ -30,13 +30,13 @@ public class FinalScreen extends Menu implements View.OnClickListener{
         boto.setOnClickListener(this);
 
         Intent getData=getIntent();
-        time= getData.getStringExtra("playtime");
-//        userName= getData.getStringExtra("username").toUpperCase();
+        time= getData.getStringExtra("temps");
+        userName= getData.getStringExtra("usuari").toUpperCase();
 
         textView= findViewById(R.id.textView2);
         textView4= findViewById(R.id.textView4);
         textView.setText(time);
-        textView4.setText("ENHORABONA  EL TEU TEMPS HA ESTAT DE:");
+        textView4.setText("ENHORABONA " + userName + " EL TEU TEMPS HA ESTAT DE:");
     }
 
 

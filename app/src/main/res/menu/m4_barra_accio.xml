@@ -1,9 +1,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- Cerca, apareix com un boto -->
-    <item android:id="@+id/Ayuda"
-        android:title="@string/Ayuda"
-        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/myswitch"
+        android:title="Música"
+        app:showAsAction="collapseActionView"
+        android:checkable="true"
+        android:checked="true"
+        />
+
+    />
     <!-- Ajustos, apareix com a desplegable-->
     <item android:id="@+id/exit"
         android:title="@string/Salir"
