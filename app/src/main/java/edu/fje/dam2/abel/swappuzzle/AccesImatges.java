@@ -81,6 +81,7 @@ public class AccesImatges extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ImatgesFirebase artista = postSnapshot.getValue(ImatgesFirebase.class);
                     imatges.add(artista);

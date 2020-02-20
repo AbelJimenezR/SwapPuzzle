@@ -76,7 +76,7 @@ public void veureLlista(){
     DBArtistes.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-
+            artistes.clear();
             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                 Usuaris artista = postSnapshot.getValue(Usuaris.class);
                 artistes.add(artista);
