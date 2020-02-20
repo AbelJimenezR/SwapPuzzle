@@ -43,13 +43,11 @@ public class FinalScreen extends Menu {
             }
         });
 
-        /*Intent getData=getIntent();
+        Intent getData=getIntent();
         moviments= getData.getStringExtra("moviments");
-        userName= getData.getStringExtra("usuari").toUpperCase();*/
+        userName= getData.getStringExtra("usuari").toUpperCase();
 
 
-        moviments="2";
-        userName="ss";
         textView4= findViewById(R.id.textView4);
         textView4.setText("ENHORABONA " + userName + " HAS EMPRAT " + moviments + " MOVIMENTS");
 
@@ -61,6 +59,7 @@ public class FinalScreen extends Menu {
 
         intent.putExtra("operacio","veure");
         startService(intent);
+
 
     }
 

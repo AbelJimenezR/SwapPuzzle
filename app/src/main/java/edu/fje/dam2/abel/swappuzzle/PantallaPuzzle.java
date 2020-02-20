@@ -6,14 +6,18 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import java.util.List;
 
 public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMoviment {
     private Bitmap originalBm;
@@ -31,7 +35,6 @@ public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMovimen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_puzzle_land);
@@ -40,11 +43,26 @@ public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMovimen
         }
 
 
-      //  setContentView(R.layout.activity_puzzle);
         ll = findViewById(R.id.elLayout);
 
         Intent result=getIntent();
-        originalBm= result.getParcelableExtra("imatge");
+
+        if(result.getParcelableExtra("imatge")!=null) {
+            originalBm = result.getParcelableExtra("imatge");
+        }else{
+           String imatgeId = result.getStringExtra("imatgeId");
+            List<ImatgesFirebase> imatges= AccesImatges.imatges;
+            for(ImatgesFirebase d : imatges){
+                if(d.getNom().equals(imatgeId)){
+                    byte[] imageAsBytes = Base64.decode(d.getValor(),Base64.DEFAULT);
+                    Bitmap bm= BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                    originalBm=bm;
+
+                }
+            }
+        }
+
+
         user = result.getStringExtra("nomUsuari");
 
         FragmentManager manager = getFragmentManager();

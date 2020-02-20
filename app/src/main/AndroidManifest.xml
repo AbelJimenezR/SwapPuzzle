@@ -32,7 +32,6 @@
         </activity>
         <service android:name=".AudioIntentService" />
            <service android:name=".UsuarisIntentService" />
-        <service android:name=".ImatgesIntentService"/>
 
     </application>
 

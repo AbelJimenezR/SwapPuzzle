@@ -4,18 +4,23 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 
 public class ImatgesFirebase {
-    private String imatge;
+    private String valor;
+    private String nom;
 
     public ImatgesFirebase(){
     }
 
-    public ImatgesFirebase(String imatge) {
-        this.imatge = imatge;
+    public ImatgesFirebase(String nom, String valor) {
+        this.valor=valor;
     }
 
 
-    public String getImatge() {
-        return imatge;
+
+    public String getValor() {
+        return valor;
     }
+    public String getNom(){return nom;}
+
+
 
 }

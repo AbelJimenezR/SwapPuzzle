@@ -120,7 +120,8 @@ public class FragmentPuzzle extends Fragment {
     }
 
    public void enviarMissatge(){
-
+        chunkedImages.clear();
+        chunkedImagesOr.clear();
         Intent intent = new Intent(getContext(), FinalScreen.class);
         intent.putExtra("moviments",String.valueOf(moviments));
         intent.putExtra("usuari",usuari);

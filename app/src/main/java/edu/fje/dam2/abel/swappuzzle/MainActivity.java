@@ -30,6 +30,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends Menu {
@@ -99,6 +101,7 @@ public class MainActivity extends Menu {
                 originalBm.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
 
+
                 try {
                     desar(byteArray);
                 } catch (IOException e) {
@@ -149,19 +152,9 @@ public class MainActivity extends Menu {
             public void onClick(DialogInterface dialogInterface, int i) {
 
 
-
-            Intent intent2 = new Intent(MainActivity.this,ImatgesIntentService.class) ;
-            intent2.putExtra("sol","sol");
-            intent2.putExtra("operacio","inici");
-            startService(intent2);
-
-            //intent2.putExtra("operacio","veure");
-           // startService(intent2);
-
-                Intent intent = new Intent(MainActivity.this,AccesImatges.class);
-                startActivity(intent);
-
-
+            Intent intent = new Intent(MainActivity.this,AccesImatges.class);
+                intent.putExtra("nomUsuari", userName);
+            startActivity(intent);
 
             }
         });

@@ -38,6 +38,7 @@ public class AccesUsuaris extends Activity {
         });
 
 
+
         artistes= UsuarisIntentService.getLlista();
 
         Collections.sort(artistes, new Comparator<Usuaris>() {
