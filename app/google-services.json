@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "928645679989",
+    "firebase_url": "https://swappuzzle-f7078.firebaseio.com",
+    "project_id": "swappuzzle-f7078",
+    "storage_bucket": "swappuzzle-f7078.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928645679989:android:57537a3ae4fb75f83f613c",
+        "android_client_info": {
+          "package_name": "edu.fje.dam2.abel.swappuzzle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928645679989-bekgf32qhf6pqg0sm682ofggfddir9tb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQllwd23KUqryUnHPn47iJNHBsFpnrSqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928645679989-bekgf32qhf6pqg0sm682ofggfddir9tb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,21 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-
-public class FinalScreen extends Menu implements View.OnClickListener{
-    private TextView textView;
+public class FinalScreen extends Menu {
     private TextView textView4;
+
     private Button boto;
+    private Button boto2;
     private String userName;
-    private  String time;
+    private  String moviments;
+    private ListView llistaUsuaris;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,33 +23,44 @@ public class FinalScreen extends Menu implements View.OnClickListener{
         setContentView(R.layout.activity_final_screen);
 
         boto=findViewById(R.id.button3);
-        boto.setOnClickListener(this);
+        boto2=findViewById(R.id.button4);
+        llistaUsuaris=findViewById(R.id.llistaArtistes);
+        boto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FinalScreen.this,MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        boto2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FinalScreen.this,AccesUsuaris.class);
+                startActivity(intent);
+
+            }
+        });
 
         Intent getData=getIntent();
-        time= getData.getStringExtra("playtime");
-//        userName= getData.getStringExtra("username").toUpperCase();
+        moviments= getData.getStringExtra("moviments");
+        userName= getData.getStringExtra("usuari").toUpperCase();
 
-        textView= findViewById(R.id.textView2);
+
         textView4= findViewById(R.id.textView4);
-        textView.setText(time);
-        textView4.setText("ENHORABONA  EL TEU TEMPS HA ESTAT DE:");
+        textView4.setText("ENHORABONA " + userName + " HAS EMPRAT " + moviments + " MOVIMENTS");
+
+        Intent intent = new Intent(this,UsuarisIntentService.class) ;
+        intent.putExtra("operacio","inici");
+        intent.putExtra("nom", userName);
+        intent.putExtra("puntuacio", moviments);
+        startService(intent);
+
+        intent.putExtra("operacio","veure");
+        startService(intent);
+
+
     }
 
-
-   /* public void onBackPressed() {
-        guardaPuntuacio();
-    }*/
-
-    @Override
-    public void onClick(View view) {
-        //guardaPuntuacio();
-    }
-
-   /* public void guardaPuntuacio(){
-        Intent intent = new Intent(this, Puntuacions.class);
-        intent.putExtra("playtime", time);
-        intent.putExtra("username",userName);
-        startActivity(intent);
-        finish();
-    }*/
 }
