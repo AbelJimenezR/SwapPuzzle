@@ -1,31 +1,48 @@
 package edu.fje.dam2.abel.swappuzzle;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-public class PantallaPuzzle extends Menu {
-
+public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMoviment {
     private Bitmap originalBm;
     private String user;
     LinearLayout ll;
-    private Chronometer crono;
 
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof FragmentPuzzle) {
+            FragmentPuzzle detallFragmentActivity = (FragmentPuzzle) fragment;
+            detallFragmentActivity.setafegirMoviment(this);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_puzzle);
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_puzzle_land);
+        } else {
+            setContentView(R.layout.activity_puzzle);
+        }
+
+
+      //  setContentView(R.layout.activity_puzzle);
         ll = findViewById(R.id.elLayout);
-        crono = (Chronometer) findViewById(R.id.crono);
-        crono.start();
+
         Intent result=getIntent();
         originalBm= result.getParcelableExtra("imatge");
         user = result.getStringExtra("nomUsuari");
@@ -34,7 +51,7 @@ public class PantallaPuzzle extends Menu {
         FragmentTransaction transaction = manager.beginTransaction();
 
         transaction.add(R.id.contenidorGrid, new FragmentPuzzle());
-        transaction.add(R.id.contenidorTemps, new FragmentTemps());
+        transaction.add(R.id.contenidorTemps, new FragmentMoviments());
         transaction.commit();
 
 
@@ -47,7 +64,6 @@ public class PantallaPuzzle extends Menu {
     public String getUser() {
         return user;
     }
-    public String getTemps() { return crono.getText().toString(); }
 
 
 
@@ -77,4 +93,15 @@ public class PantallaPuzzle extends Menu {
     }
 
 
+
+    @Override
+    public void afegirMoviment(String nom) {
+
+
+        FragmentMoviments fragmentTemps = (FragmentMoviments)
+                getFragmentManager().findFragmentById(R.id.contenidorTemps);
+
+        fragmentTemps.afegirMoviment(nom);
+
+    }
 }

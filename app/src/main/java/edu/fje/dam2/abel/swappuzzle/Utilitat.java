@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.text.InputType;
 import android.util.Log;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class Utilitat extends AppCompatActivity {
+
 
     static ArrayList<Bitmap> chunkedImages = new ArrayList<Bitmap>(9);
 
@@ -24,7 +26,7 @@ public class Utilitat extends AppCompatActivity {
         //For height and width of the small image chunks
         int chunkHeight, chunkWidth;
 
-        Bitmap original = Bitmap.createScaledBitmap(image, 500, 500, true);
+       Bitmap original = Bitmap.createScaledBitmap(image, 500, 500, true);
 
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(original, original.getWidth(), original.getHeight(), true);
         rows = cols = (int) Math.sqrt(chunkNumbers);
@@ -66,8 +68,6 @@ public class Utilitat extends AppCompatActivity {
         }
 
     }
-
-
 
 
 

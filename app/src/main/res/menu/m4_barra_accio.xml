@@ -11,6 +11,14 @@
         android:checked="true"
         />
 
+    <item
+        android:id="@+id/myswitch2"
+        android:title="Efectes"
+        app:showAsAction="collapseActionView"
+        android:checkable="true"
+        android:checked="true"
+        />
+
     />
     <!-- Ajustos, apareix com a desplegable-->
     <item android:id="@+id/exit"

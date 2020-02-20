@@ -13,6 +13,7 @@ public class AudioIntentService extends IntentService {
 
     private MediaPlayer mp;
 
+
     public AudioIntentService() {
         super("serveiAudio");
     }
@@ -21,6 +22,7 @@ public class AudioIntentService extends IntentService {
     public void onCreate() {
         super.onCreate();
         mp = MediaPlayer.create(this, R.raw.musica_fondo);
+
     }
 
     @Override

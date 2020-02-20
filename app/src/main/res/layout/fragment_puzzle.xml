@@ -10,12 +10,15 @@
         android:id="@+id/gridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="-37dp"
-        android:verticalSpacing="-2dp"
+
         android:gravity="center"
         android:numColumns="3"
         android:stretchMode="columnWidth"
 
         />
 
+
 </LinearLayout>
+
+    <!--android:horizontalSpacing="-37dp"
+    android:verticalSpacing="-2dp"-->
