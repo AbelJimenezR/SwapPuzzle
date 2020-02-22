@@ -1,8 +1,10 @@
 package edu.fje.dam2.abel.swappuzzle;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -34,6 +37,7 @@ public class FragmentPuzzle extends Fragment {
     private Bitmap originalBm;
     private  LlistaTask task;
     afegirMoviment callback;
+    Context context;
 
 
     public void setafegirMoviment(afegirMoviment callback) {
@@ -55,7 +59,7 @@ public class FragmentPuzzle extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_puzzle,
                 container, false);
-
+        context=getActivity().getApplicationContext();
         final PantallaPuzzle activity = (PantallaPuzzle) getActivity();
         originalBm=activity.getMyData();
         usuari=activity.getUser();
@@ -67,8 +71,11 @@ public class FragmentPuzzle extends Fragment {
         ImageAdapter ia = new ImageAdapter(getActivity().getApplication().getApplicationContext(), chunkedImages);
         imatges.setAdapter(ia);
         imatges.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("ResourceType")
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Integer posBuida = 0;
+
+                v.startAnimation(AnimationUtils.loadAnimation(context,R.animator.animacio));
 
 
                 for (int x = 0; x < chunkedImages.size(); x++) {
