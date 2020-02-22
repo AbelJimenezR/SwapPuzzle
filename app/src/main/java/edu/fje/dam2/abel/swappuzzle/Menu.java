@@ -21,23 +21,22 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         intent = new Intent(this, AudioIntentService.class);
+        isChecked=getFromSp("cec3");
+
 
 
         am = (AudioManager) getSystemService(AUDIO_SERVICE);
-        int requestResult = am.requestAudioFocus(
+
+        am.requestAudioFocus(
                 focusChangeListener, AudioManager.STREAM_MUSIC,
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+                AudioManager.AUDIOFOCUS_GAIN);
 
-        if (requestResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED && isChecked==true) {
 
+       /* if(isChecked&&AudioManager.AUDIOFOCUS_GAIN==0){
             intent.putExtra("operacio", "inici");
             startService(intent);
+        }*/
 
-        } else if (requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-            intent.putExtra("operacio", "pause");
-            startService(intent);
-        } else {
-        }
     }
 
 
@@ -70,12 +69,6 @@ public class Menu extends AppCompatActivity {
         bubu2= menu.findItem(R.id.myswitch2);
         bubu2.setChecked(getFromSp("cec2"));
 
-        if(bubu1.isChecked()) {
-        intent.putExtra("operacio", "inici");
-        startService(intent);
-
-       }
-
         return true;
     }
 
@@ -102,6 +95,8 @@ public class Menu extends AppCompatActivity {
                 if (bubu1.isChecked()) {
                     isChecked=false;
                     bubu1.setChecked(false);
+                    isChecked=false;
+                    saveInSp("cec3",false);
                     saveInSp("cec1",false);
                     intent.putExtra("operacio", "pausa");
                     startService(intent);
@@ -109,6 +104,9 @@ public class Menu extends AppCompatActivity {
                     isChecked=true;
                     bubu1.setChecked(true);
                     saveInSp("cec1",true);
+                    isChecked=true;
+                    saveInSp("cec3",true);
+
                     intent.putExtra("operacio", "inici");
                     startService(intent);
 
@@ -149,26 +147,33 @@ public class Menu extends AppCompatActivity {
 
     private AudioManager.OnAudioFocusChangeListener focusChangeListener =
             new AudioManager.OnAudioFocusChangeListener() {
+                @Override
                 public void onAudioFocusChange(int focusChange) {
                     switch (focusChange) {
 
-                        /*case (AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) :
-                            // Lower the volume while ducking.
-                            mp.setVolume(0.2f, 0.2f);
-                            break;*/
-                        case (AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) :
+                        case (AudioManager.AUDIOFOCUS_LOSS) :
+                            isChecked=false;
+                            bubu1.setChecked(false);
                             intent.putExtra("operacio", "pausa");
                             startService(intent);
+                            am.abandonAudioFocus(focusChangeListener);
+
                             break;
 
-                        case (AudioManager.AUDIOFOCUS_LOSS) :
-                            intent.putExtra("operacio", "pausa");
+
+                        case (AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) :
+                            isChecked=false;
+                            intent.putExtra("operacio", "stop");
                             startService(intent);
                             break;
 
                         case (AudioManager.AUDIOFOCUS_GAIN) :
+                            isChecked=true;
+                            bubu1.setChecked(true);
                             intent.putExtra("operacio", "inici");
                             startService(intent);
+                            am.abandonAudioFocus(focusChangeListener);
+
                             break;
 
                         default: break;

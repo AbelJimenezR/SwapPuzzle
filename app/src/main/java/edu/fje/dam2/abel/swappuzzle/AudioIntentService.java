@@ -41,9 +41,11 @@ public class AudioIntentService extends IntentService {
                 case "pausa":
                     mp.pause();
                     break;
-                case "salta":
-                    mp.seekTo(10000);
+
+                case "atura":
+                    mp.stop();
                     break;
+
                 default:
                     break;
             }

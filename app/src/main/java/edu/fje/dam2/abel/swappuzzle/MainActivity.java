@@ -2,6 +2,7 @@ package edu.fje.dam2.abel.swappuzzle;
 
 import android.Manifest;
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -10,14 +11,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,35 +42,26 @@ public class MainActivity extends Menu {
     private static final int PERMIS_CAMARA = 200;
     private static final int PERMIS_CAPTURA_IMATGE = 300;
     private static String userName;
-    private Button botoInici;
-    private Button botoSortir;
-    private Intent intent;
+    private VistaPropia vistaPropia;
+    private VistaPropia vistaPropia2;
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
-        botoInici = findViewById(R.id.botoInici);
-        botoSortir = findViewById(R.id.botoSortir);
-        float s= botoSortir.getX();
-        Log.i("sd",String.valueOf(s));
 
 
-        botoInici.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                askUser();
-
-            }
-        });
-        botoSortir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.exit(0);
-
-            }
-        });
+        vistaPropia = findViewById(R.id.vista);
+        vistaPropia.setColor(Color.BLUE);
+        vistaPropia.setY(812);
+        vistaPropia.setX(330);
+        vistaPropia.setCadena("Jugar");
+        vistaPropia2= findViewById(R.id.vista2);
+        vistaPropia2.setColor(Color.RED);
+        vistaPropia2.setY(952);
+        vistaPropia2.setX(330);
+        vistaPropia2.setCadena("Sortir");
 
     }
 
@@ -94,7 +89,6 @@ public class MainActivity extends Menu {
                 Intent intent = new Intent(this, PantallaPuzzle.class);
                 intent.putExtra("imatge", originalBm);
                 intent.putExtra("nomUsuari", userName);
-
 
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -152,9 +146,9 @@ public class MainActivity extends Menu {
             public void onClick(DialogInterface dialogInterface, int i) {
 
 
-            Intent intent = new Intent(MainActivity.this,AccesImatges.class);
+                Intent intent = new Intent(MainActivity.this, AccesImatges.class);
                 intent.putExtra("nomUsuari", userName);
-            startActivity(intent);
+                startActivity(intent);
 
             }
         });
@@ -191,5 +185,24 @@ public class MainActivity extends Menu {
                 output.close();
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+
+        float ex = e.getX();
+        float ey = e.getY();
+        float bx = vistaPropia.getX();
+
+
+        float t = 75;
+        if ((ex >= bx && ex <= bx + 400) && (ey >= 1035 && ey <= 1035 + 100)) {
+
+            askUser();
+        }else if ((ex >= bx && ex <= bx + 400) && (ey >= 1180 && ey <= 1180 + 100)) {
+
+            System.exit(0);
+        }
+        return true;
     }
 }
