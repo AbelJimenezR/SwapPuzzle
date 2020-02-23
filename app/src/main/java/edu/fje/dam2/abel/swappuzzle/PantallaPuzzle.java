@@ -11,7 +11,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.Chronometer;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -23,6 +26,9 @@ public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMovimen
     private Bitmap originalBm;
     private String user;
     LinearLayout ll;
+    FrameLayout fl;
+    FrameLayout fl2;
+
 
 
     @Override
@@ -44,6 +50,10 @@ public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMovimen
 
 
         ll = findViewById(R.id.elLayout);
+        fl = findViewById(R.id.contenidorGrid);
+        fl2 = findViewById(R.id.contenidorTemps);
+
+
 
         Intent result=getIntent();
 
@@ -96,6 +106,13 @@ public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMovimen
             CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT,
                     CoordinatorLayout.LayoutParams.MATCH_PARENT);
 
+
+            LinearLayout.LayoutParams lpa=new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,2);
+            LinearLayout.LayoutParams lpa2=new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,2);
+
+            fl.setLayoutParams(lpa);
+            fl2.setLayoutParams(lpa2);
+            lpa.topMargin=30;
             ll.setLayoutParams(lp);
             ll.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -105,6 +122,15 @@ public class PantallaPuzzle extends Menu implements FragmentPuzzle.afegirMovimen
 
           CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT,
                     CoordinatorLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams lpa=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+            LinearLayout.LayoutParams lpa2=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,2);
+
+            lpa.gravity = Gravity.CENTER;
+            lpa.topMargin=50;
+
+            fl.setLayoutParams(lpa);
+            fl2.setLayoutParams(lpa2);
+
             ll.setLayoutParams(lp);
             ll.setOrientation(LinearLayout.VERTICAL);
         }
