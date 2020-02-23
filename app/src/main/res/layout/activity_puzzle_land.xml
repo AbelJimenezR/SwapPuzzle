@@ -10,22 +10,25 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         tools:context=".PantallaPuzzle"
-        tools:showIn="@layout/activity_puzzle">
+        tools:showIn="@layout/activity_puzzle"
+        android:weightSum="4"
+        >
 
         <FrameLayout
             android:id="@+id/contenidorGrid"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2"
+            android:layout_marginTop="10dp">
 
         </FrameLayout>
 
 
         <FrameLayout
             android:id="@+id/contenidorTemps"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2">
 
         </FrameLayout>
 

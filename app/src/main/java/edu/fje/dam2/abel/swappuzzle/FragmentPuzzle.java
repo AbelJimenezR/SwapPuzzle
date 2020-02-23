@@ -1,29 +1,25 @@
 package edu.fje.dam2.abel.swappuzzle;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class FragmentPuzzle extends Fragment {
@@ -67,7 +63,7 @@ public class FragmentPuzzle extends Fragment {
         imatges = (GridView) view.findViewById(R.id.gridView);
         chunkedImages = Utilitat.splitImage(originalBm, 9);
         chunkedImagesOr = (ArrayList<Bitmap>) chunkedImages.clone();
-        //Collections.shuffle(chunkedImages);
+        Collections.shuffle(chunkedImages);
         ImageAdapter ia = new ImageAdapter(getActivity().getApplication().getApplicationContext(), chunkedImages);
         imatges.setAdapter(ia);
         imatges.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,7 +71,25 @@ public class FragmentPuzzle extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Integer posBuida = 0;
 
-                v.startAnimation(AnimationUtils.loadAnimation(context,R.animator.animacio));
+                final Animation animacio = AnimationUtils.loadAnimation(context, R.animator.animacio);
+                v.startAnimation(animacio);
+
+                animacio.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                                        }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                       check();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
 
 
                 for (int x = 0; x < chunkedImages.size(); x++) {
@@ -113,11 +127,7 @@ public class FragmentPuzzle extends Fragment {
                 Adapter im = imatges.getAdapter();
                 imatges.setAdapter((ListAdapter) im);
 
-                if(Utilitat.comprovaSiComplet(chunkedImages, chunkedImagesOr)){
-                    enviarMissatge();
 
-                    activity.finish();
-                }
             }
 
         });
@@ -148,6 +158,14 @@ public class FragmentPuzzle extends Fragment {
         @Override
         protected void onPostExecute(final String resultat) {
 
+        }
+    }
+
+    public void check() {
+        if (Utilitat.comprovaSiComplet(chunkedImages, chunkedImagesOr)) {
+            enviarMissatge();
+
+            getActivity().finish();
         }
     }
 
